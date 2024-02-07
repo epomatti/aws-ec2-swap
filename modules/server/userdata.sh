@@ -14,7 +14,6 @@ ssmParameterName=AmazonCloudWatch-linux-Swap
 /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:$ssmParameterName -s
 
 ### Install more services to consume memory ###
-
 # Nginx
 apt install -y nginx
 systemctl enable nginx
@@ -29,7 +28,15 @@ systemctl start mysql.service
 apt install -y ruby-full
 wget https://aws-codedeploy-us-east-2.s3.us-east-2.amazonaws.com/latest/install
 chmod +x ./install
-sudo ./install auto
+./install auto
+
+### Swap ###
+swapfile="/swapfile"
+dd if=/dev/zero of=$swapfile bs=128M count=4
+chmod 600 $swapfile
+mkswap $swapfile
+swapon $swapfile
+echo "$swapfile swap swap defaults 0 0" >> /etc/fstab
 
 
 reboot

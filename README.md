@@ -1,6 +1,30 @@
-# aws-ec2-swap
+# AWS EC2 memory swap
 
-Command reference:
+Swap commands are scripted in the `userdata` file following instructions from this [article][1].
+
+Create the `.auto.tfvars` file:
+
+```terraform
+aws_region    = "us-east-2"
+ami           = "ami-045909c05cb423e93" # Ubuntu 22.04 arm64
+instance_type = "t4g.nano"
+```
+
+Create the infrastructure:
+
+```sh
+terraform init
+terraform apply -auto-approve
+```
+
+Verify that the swap is working, such as by using SSM Patch.
+
+```sh
+free -h
+lsblk
+```
+
+Other commands reference:
 
 ```sh
 # Confirm you can use swap
@@ -27,14 +51,5 @@ swapon -s
 echo '/swapfile swap swap defaults 0 0' >> /etc/fstab
 ```
 
-Commands for partitions:
 
-```sh
-free -h
-lsblk
-```
-
-Source:
-
-- [How do I allocate memory to work as swap space in an Amazon EC2 instance by using a swap file](https://youtu.be/uAr_EIlTIxs)
-- [How do I create a swap partition for my EC2 instance](https://youtu.be/oHW0quS4pV4)
+[1]: https://repost.aws/knowledge-center/ec2-memory-swap-file
