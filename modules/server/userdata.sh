@@ -32,7 +32,7 @@ chmod +x ./install
 
 ### Swap ###
 swapfile="/swapfile"
-dd if=/dev/zero of=$swapfile bs=128M count=4
+dd if=/dev/zero of=$swapfile bs=128M count=8
 chmod 600 $swapfile
 mkswap $swapfile
 swapon $swapfile
