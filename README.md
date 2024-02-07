@@ -24,6 +24,21 @@ free -h
 lsblk
 ```
 
+https://serverfault.com/questions/218750/why-dont-ec2-ubuntu-images-have-swap
+
+sysctl -w vm.swappiness=20
+cat /proc/sys/vm/swappiness
+
+https://askubuntu.com/questions/103915/how-do-i-configure-swappiness
+https://askubuntu.com/questions/192304/changing-swappiness-in-sysctl-conf-doesnt-work-for-me
+
+
+
+curl -L https://github.com/epomatti/stressbox/archive/refs/tags/v0.1.4.tar.gz -o stressbox.tar.gz
+tar -xzf stressbox.tar.gz
+
+
+
 ## Command reference
 
 ```sh

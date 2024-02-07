@@ -31,6 +31,11 @@ chmod +x ./install
 ./install auto
 
 ### Swap ###
+swapiness=20
+sysctl -w vm.swappiness=$swapiness
+echo "vm.swappiness=$swapiness" >> /etc/sysctl.conf
+
+# swap
 swapfile="/swapfile"
 dd if=/dev/zero of=$swapfile bs=128M count=8
 chmod 600 $swapfile

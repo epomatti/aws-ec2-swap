@@ -9,3 +9,7 @@ variable "ami" {
 variable "instance_type" {
   type = string
 }
+
+variable "user_data" {
+  type = string
+}

@@ -32,6 +32,7 @@ module "server" {
   subnet_id     = module.vpc.public_subnet_id
   instance_type = var.instance_type
   ami           = var.ami
+  user_data     = var.user_data
 
   depends_on = [module.ssm]
 }

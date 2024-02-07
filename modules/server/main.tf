@@ -15,7 +15,7 @@ resource "aws_instance" "nat_instance" {
   subnet_id                   = var.subnet_id
   vpc_security_group_ids      = [aws_security_group.nat_instance.id]
   iam_instance_profile        = aws_iam_instance_profile.nat_instance.id
-  user_data                   = file("${path.module}/userdata.sh")
+  user_data                   = file("${path.module}/userdata/${var.user_data}")
 
   metadata_options {
     http_endpoint = "enabled"
@@ -104,6 +104,15 @@ resource "aws_security_group_rule" "egress_https" {
   type              = "egress"
   from_port         = 443
   to_port           = 443
+  protocol          = "TCP"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.nat_instance.id
+}
+
+resource "aws_security_group_rule" "ingress_http" {
+  type              = "ingress"
+  from_port         = 8080
+  to_port           = 8080
   protocol          = "TCP"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.nat_instance.id
