@@ -24,7 +24,7 @@ free -h
 lsblk
 ```
 
-Other commands reference:
+## Command reference
 
 ```sh
 # Confirm you can use swap
@@ -49,6 +49,14 @@ swapon -s
 
 # make the swap file usable by the kernel on the next reboot
 echo '/swapfile swap swap defaults 0 0' >> /etc/fstab
+```
+
+---
+
+### Clean-up
+
+```sh
+terraform destroy -auto-approve
 ```
 
 
