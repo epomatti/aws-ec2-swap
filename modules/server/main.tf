@@ -33,7 +33,8 @@ resource "aws_instance" "nat_instance" {
   lifecycle {
     ignore_changes = [
       ami,
-      associate_public_ip_address
+      associate_public_ip_address,
+      user_data
     ]
   }
 
@@ -64,6 +65,16 @@ resource "aws_iam_role" "nat_instance" {
 resource "aws_iam_role_policy_attachment" "AmazonSSMManagedInstanceCore" {
   role       = aws_iam_role.nat_instance.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonSSMReadOnlyAccess" {
+  role       = aws_iam_role.nat_instance.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "CloudWatchAgentServerPolicy" {
+  role       = aws_iam_role.nat_instance.name
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
 }
 
 resource "aws_security_group" "nat_instance" {

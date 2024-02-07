@@ -21,6 +21,10 @@ module "vpc" {
   workload = local.workload
 }
 
+module "ssm" {
+  source = "./modules/ssm"
+}
+
 module "server" {
   source        = "./modules/server"
   workload      = local.workload
@@ -28,4 +32,6 @@ module "server" {
   subnet_id     = module.vpc.public_subnet_id
   instance_type = var.instance_type
   ami           = var.ami
+
+  depends_on = [module.ssm]
 }
