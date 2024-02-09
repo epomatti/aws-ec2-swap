@@ -24,20 +24,28 @@ free -h
 lsblk
 ```
 
-https://serverfault.com/questions/218750/why-dont-ec2-ubuntu-images-have-swap
+Along with the swap file or partition, swapiness might also need to be configured:
 
-sysctl -w vm.swappiness=20
+```sh
+### Swap ###
+swapiness=20
+sysctl -w vm.swappiness=$swapiness
+echo "vm.swappiness=$swapiness" >> /etc/sysctl.conf
+
+# swap
+swapfile="/swapfile"
+dd if=/dev/zero of=$swapfile bs=64M count=8
+chmod 600 $swapfile
+mkswap $swapfile
+swapon $swapfile
+echo "$swapfile swap swap defaults 0 0" >> /etc/fstab
+```
+
+To check the swapiness:
+
+```sh
 cat /proc/sys/vm/swappiness
-
-https://askubuntu.com/questions/103915/how-do-i-configure-swappiness
-https://askubuntu.com/questions/192304/changing-swappiness-in-sysctl-conf-doesnt-work-for-me
-
-
-
-curl -L https://github.com/epomatti/stressbox/archive/refs/tags/v0.1.4.tar.gz -o stressbox.tar.gz
-tar -xzf stressbox.tar.gz
-
-
+```
 
 ## Command reference
 
@@ -64,6 +72,15 @@ swapon -s
 
 # make the swap file usable by the kernel on the next reboot
 echo '/swapfile swap swap defaults 0 0' >> /etc/fstab
+```
+
+## Sources
+
+```
+https://serverfault.com/questions/218750/why-dont-ec2-ubuntu-images-have-swap
+https://askubuntu.com/questions/103915/how-do-i-configure-swappiness
+https://askubuntu.com/questions/192304/changing-swappiness-in-sysctl-conf-doesnt-work-for-me
+https://unix.stackexchange.com/questions/23072/how-can-i-check-if-swap-is-active-from-the-command-line
 ```
 
 ---

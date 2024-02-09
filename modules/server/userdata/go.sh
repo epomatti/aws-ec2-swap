@@ -24,17 +24,17 @@ echo 'export PATH=$PATH:/usr/local/go/bin' >> /etc/profile
 
 
 ### Swap ###
-# swapiness=20
-# sysctl -w vm.swappiness=$swapiness
-# echo "vm.swappiness=$swapiness" >> /etc/sysctl.conf
+swapiness=20
+sysctl -w vm.swappiness=$swapiness
+echo "vm.swappiness=$swapiness" >> /etc/sysctl.conf
 
-# # swap
-# swapfile="/swapfile"
-# dd if=/dev/zero of=$swapfile bs=128M count=8
-# chmod 600 $swapfile
-# mkswap $swapfile
-# swapon $swapfile
-# echo "$swapfile swap swap defaults 0 0" >> /etc/fstab
+# swap
+swapfile="/swapfile"
+dd if=/dev/zero of=$swapfile bs=64M count=8
+chmod 600 $swapfile
+mkswap $swapfile
+swapon $swapfile
+echo "$swapfile swap swap defaults 0 0" >> /etc/fstab
 
 
 reboot
